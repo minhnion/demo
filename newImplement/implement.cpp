@@ -64,7 +64,10 @@ void bai3(){
             pedestrians[i]->setVeclocity(double(inputData["walkability"]["wheelchairs"]["veclocity"]));
         }
         if (pedestrians[i]->getWalkability() == sticks) {
-            pedestrians[i]->setVeclocity(double(inputData["walkability"]["crutche"]["veclocity"]));
+            pedestrians[i]->setVeclocity(double(inputData["walkability"]["sticks"]["veclocity"]));
+        }
+        if (pedestrians[i]->getWalkability() == crutches) {
+            pedestrians[i]->setVeclocity(double(inputData["walkability"]["crutches"]["veclocity"]));
         }
         if (pedestrians[i]->getWalkability() == noDisabilityNoOvertaking) {
             pedestrians[i]->setVeclocity(double(inputData["walkability"]["noDisabilityNoOvertaking"]["veclocity"]));
