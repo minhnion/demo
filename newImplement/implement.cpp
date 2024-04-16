@@ -14,7 +14,6 @@ void bai3(){
     json inputJson;
     int numNoDisability = 0;
     int numPersonel = 0;
-    int numNoDisability = 0;
     
     inputJson = int(inputData["numOfAgents"]["value"]);
     int M = inputJson;
@@ -28,52 +27,53 @@ void bai3(){
             // personel luon < Nodisability
             // còn yếu tố không có personel nào có tuổi dưới 23 và có tuổi trên 61
             // chỉnh lại sau khi cài đặt về age
-            if (i==numOfAgents-1 && numPersonel == numNoDisability) randomNumber = rand() % 2 + 2; 
-            else {
                 pedestrians[i] = new Personel();
                 ++numPersonel;
-            }
         }
-        if (randomNumber == 2) {
+        else if (randomNumber == 2) {
             pedestrians[i] = new Visitor();
             // cai dat start va end
             //Ward temp = new Ward
             pedestrian[i]->setStart();
         }
-        if(randomNumber == 3){
+        else {
             pedestrians[i] = new Patient();
         }
         // cai dat Ward start cho pedestrian
         
         // cai dat walkability
         if (pedestrians[i]->getType() == "Personel") {
-            pedestrians[i]->setWalkability(noDisability);
+            randomNumber = rand() % 2;
+            pedestrians[i]->setWalkability(randomNumber? noDisabilityNoOvertaking:noDisabilityOvertaking);
             ++numNoDisability;
         }
         else {
             // chưa đúng cách sinh giá trị ngẫu nhiên
             // phải dựa vào mã python của thầy
-            randomNumber = rand() % 5 ;
-            if (randomNumber == 0) ++numNoDisability;
+            randomNumber = rand() % 6 ;
+            if (randomNumber == 0 || randomNumber == 1) ++numNoDisability;
             pedestrians[i]->setWalkability = static_cast<Walkability>(randomNumber);
         }
         // cai dat gia tri cam xuc emotion ban dau
         pedestrian[i]->emotion = new Emotion();
-        // cai dat veclocity
+        // cai dat veclocity 
         if (pedestrians[i]->getWalkability() == blind) {
-            pedestrians[i]->veclocity = double(inputData["walkability"]["blind"]["veclocity"]);
+            pedestrians[i]->setVeclocity(double(inputData["walkability"]["blind"]["veclocity"]));
         }  
         if (pedestrians[i]->getWalkability() == wheelchairs) {
-            pedestrians[i]->veclocity = double(inputData["walkability"]["wheelchairs"]["veclocity"]);
+            pedestrians[i]->setVeclocity(double(inputData["walkability"]["wheelchairs"]["veclocity"]));
         }
         if (pedestrians[i]->getWalkability() == sticks) {
-            pedestrians[i]->veclocity = double(inputData["walkability"]["crutche"]["veclocity"]);
+            pedestrians[i]->setVeclocity(double(inputData["walkability"]["crutche"]["veclocity"]));
         }
-        if (pedestrians[i]->getWalkability() == noDisability) {
-            // noDisability co the lay input tu noDisabilityNoOvertaking hoac noDisabilityOvertaking
-            pedestrians[i]->veclocity = double(inputData["walkability"]["noDisabilityNoOvertaking"]["veclocity"]);
+        if (pedestrians[i]->getWalkability() == noDisabilityNoOvertaking) {
+            pedestrians[i]->setVeclocity(double(inputData["walkability"]["noDisabilityNoOvertaking"]["veclocity"]));
+        }
+        if (pedestrians[i]->getWalkability() == noDisabilityOvertaking){
+            pedestrians[i]->setVeclocity(double(inputData["walkability"]["noDisabilityOvertaking"]["veclocity"]));
         }
     }
+    // cai dat Personality
     int *arrT = new int[numOfAgents]; // cap phat bo nho dong 
     do {  
         // random giữa 2 tính cách open và neurotic sao cho tỉ lệ cả 2 xấp xỉ 50%  
@@ -91,22 +91,23 @@ void bai3(){
         double neuroticRatio = (double)countNeurotic/numOfAgents *100;
         
     }while ( abs(openRatio-50) >= 5);
-    // cài đặt các thông số liên quan đến tính cách
     for (int i=0;i<numOfAgents;++i){
         if (arrT[i] == 0){
-            pedestrians[i]->person = 
-            new Personality(int(inputdata["personalityDistribution"]["distribution"]["open"]["lambda"]),
+            Personality p = new Personality(int(inputdata["personalityDistribution"]["distribution"]["open"]["lambda"]),
             double (inputdata["personalityDistribution"]["distribution"]["open"]["positiveEmotionThreshold"]),
-            double (inputdata["personalityDistribution"]["distribution"]["open"]["negativeEmotionThreshold"]) );
+            double (inputdata["personalityDistribution"]["distribution"]["open"]["negativeEmotionThreshold"]));
+            pedestrians[i]->setPersonality(p);
         }
         else {
-            pedestrians[i]->person = 
-            new Personality(int(inputdata["personalityDistribution"]["distribution"]["neurotic"]["lambda"]),
+            Personality p = new Personality(int(inputdata["personalityDistribution"]["distribution"]["neurotic"]["lambda"]),
             double (inputdata["personalityDistribution"]["distribution"]["neurotic"]["positiveEmotionThreshold"]),
             double (inputdata["personalityDistribution"]["distribution"]["neurotic"]["negativeEmotionThreshold"]));
+            pedestrians[i]->setPersonality(p);
         }
     }
     delete []arrT; // giai phong bo nho dong
+
+
 
 
     std::vector<Event> allEvents;

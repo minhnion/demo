@@ -8,7 +8,8 @@
 #include <vector>
 
 enum Walkability {
-    noDisability,
+    noDisabilityNoOvertaking,
+    noDisabilityOvertaking,
     crutches,
     sticks,
     wheelchairs,
