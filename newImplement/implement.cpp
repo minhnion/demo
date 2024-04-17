@@ -1,10 +1,10 @@
 #pragma once
 #include <fstream>
 #include <random>
-#include "Pedestrian.cpp"
-#include "Visitor.cpp"
-#include "Personel.cpp"
-#include "Patient.cpp"
+#include "object/Pedestrian.cpp"
+#include "object/Visitor.cpp"
+#include "object/Personel.cpp"
+#include "object/Patient.cpp"
 #include <cstdlib>
 #include <ctime>
 #include <json/json.h>
@@ -15,6 +15,8 @@ void bai3(){
     int numNoDisability = 0;
     int numPersonel = 0;
     
+
+
     inputJson = int(inputData["numOfAgents"]["value"]);
     int M = inputJson;
     int numOfAgents = inputJson;
@@ -27,6 +29,7 @@ void bai3(){
             // personel luon < Nodisability
             // còn yếu tố không có personel nào có tuổi dưới 23 và có tuổi trên 61
             // chỉnh lại sau khi cài đặt về age
+            
                 pedestrians[i] = new Personel();
                 ++numPersonel;
         }
@@ -64,7 +67,10 @@ void bai3(){
             pedestrians[i]->setVeclocity(double(inputData["walkability"]["wheelchairs"]["veclocity"]));
         }
         if (pedestrians[i]->getWalkability() == sticks) {
-            pedestrians[i]->setVeclocity(double(inputData["walkability"]["crutche"]["veclocity"]));
+            pedestrians[i]->setVeclocity(double(inputData["walkability"]["sticks"]["veclocity"]));
+        }
+        if (pedestrians[i]->getWalkability() == crutches) {
+            pedestrians[i]->setVeclocity(double(inputData["walkability"]["crutches"]["veclocity"]));
         }
         if (pedestrians[i]->getWalkability() == noDisabilityNoOvertaking) {
             pedestrians[i]->setVeclocity(double(inputData["walkability"]["noDisabilityNoOvertaking"]["veclocity"]));
