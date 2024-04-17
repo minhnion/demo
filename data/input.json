@@ -1,0 +1,212 @@
+{
+  "runMode": {
+    "description": "Run mode (1 - Statistical calculation, 0 - Test, 3 - Use hospital.txt)",
+    "value" :3
+  },
+  "graphicsMode": {
+    "description": "Graphics mode (1 - Graphics, 0 - No Graphics)",
+    "value": 1
+  },
+  "numOfAgents": {
+    "description": "Number of agents",
+    "value": 50
+  },
+  "acceleration": {
+    "description": "Acceleration of AGV",
+    "value": 0.25
+  },
+  "agvDesiredSpeed": {
+    "description": "Desired speed of AGV (m/s)",
+    "value": 0.6
+  },
+  "thresDistance": {
+    "description": "Threshold distance for agv to stop when colliding with a person",
+    "value": 0.3
+  },
+
+  "walkability" : {
+    "description" : "velocity distribution of pedestrians",
+    "distribution" : {
+      "noDisabilityNoOvertaking" : {
+        "description": "Percentage of agents (No disability, without overtaking behavior)",
+        "velocity": 1.24
+      },
+      "noDisabilityOvertaking" : {
+        "description": "Percentage of agents (No disability, with overtaking behavior)",
+        "velocity": 2.48
+      },
+      "crutches" : {
+        "description": "Percentage of agents (Walking with crutches)",
+        "velocity": 0.94
+      },
+      "sticks": {
+        "description": "Percentage of agents (Walking with sticks)",
+        "velocity": 0.81
+      },
+      "wheelchairs": {
+        "description": "Percentage of agents (Wheelchairs)",
+        "velocity": 0.69
+      },
+      "blind": {
+        "description": "Percentage of agents (The blind)",
+        "velocity": 0.52
+      },
+      "normal" : {
+        "description" : "normal distribution",
+        "samples" : "6",
+        "sumOfValues" : "numOfAgents" ,
+        "lowerBound" : "0",
+        "upperBound" : "10000"
+      }
+  
+    }
+  },
+  "runConcurrently": {
+    "description": "AGV run concurrently",
+    "value": 0
+  },
+  "experimentalDeviation": {
+    "description": "Experimental deviation (percent)",
+    "value": 10
+  },
+  "randomness":{
+    "description":"the option for establishing new randon configuration or load from the file (1-new random data, 0-available data)"
+  },
+  "ageDistribution" : {
+    "description" : "distribution of age in pedestrians",
+    "distribution": {
+      "normal" : {
+        "description" : "normal distribution",
+        "samples" : "numOfAgents",
+        "numberOfValues" : 100,
+        "minValue" : 5,
+        "maxValue" : 104
+      }
+    }
+  },
+  "journeyDistribution" : {
+    "description" : "distribution of number of wards in a journey",
+    "distribution": {
+      "forPatient" : {
+        "description" : "number of wards that a patient must visit",
+        "value" : "3",
+        "start" : "A",
+        "end": "A"
+      },
+      "forVisitor" : {
+        "description" : "number of wards that a visitor must visit",
+        "value" : "1",
+        "start" : "A",
+        "end": "A"
+      },
+      "forPersonel" : {
+        "description" : "number of wards that a personel must visit",
+        "value" : "3",
+        "start" : "wardDistribution",
+        "end": "start",
+        "threshold" : "noDisabilityNoOvertaking + noDisabilityOvertaking"
+      }
+    }
+  },
+  "wardDistribution" : {
+    "description" : "distribution of wards for personels",
+    "distribution": {
+      "A" : {
+        "description" : "work at Administration Center"
+      },
+      "B" : {
+        "description" : "work at Brain Center"
+      },
+      "E" : {
+        "description" : "work at E Center"
+      },
+      "F" : {
+        "description" : "work at F Center"
+      },
+      "G" : {
+        "description" : "work at G Center"
+      },
+      "L" : {
+        "description" : "work at L Center"
+      },
+      "M" : {
+        "description" : "work at M Center"
+      },
+      "N" : {
+        "description" : "work at N Center"
+      },
+      "K" : {
+        "description" : "work at K Center"
+      },
+      "W" : {
+        "description" : "work at G Center"
+      },
+      "normal" : {
+        "description" : "normal distribution",
+        "samples" : "13",
+        "sumOfValues" : "forPersonel" ,
+        "lowerBound" : "0",
+        "upperBound" : "10000"
+      }
+    }
+  },
+"personalityDistribution" : {
+	"description" : "distribution of personality in a pedestrian",
+	"distribution": {
+		"open" : {
+			"description" : "open personalities are more optimistic when facing setbacks and will be more active in solving difficulties",
+			"positiveEmotionThreshold" : "0.3",
+			"negativeEmotionThreshold" : "-0.7",
+			"percentage" : 50,
+			"lambda" : 1
+    },  
+		"neurotic" : {
+			"description" : "neurotic personalities tend to behave negatively in the face of the same frustration.",
+			"positiveEmotionThreshold" : "0.6",
+			"negativeEmotionThreshold" : "-0.4",
+			"percentage" : 50,
+			"lambda" : 4
+    }
+  },
+  "heuristic" : {
+	  "positiveEmotionThreshold" : "0.8",
+		"0negativeEmotionThreshold" : "-0.8"
+  }
+},
+"insideTimeDistribution" : {
+	"description" : "distribution of inside time for a pedestrian",
+	"distribution": {
+		"uniform" : {
+			"description" : "uniform distribution",
+			"value" : 10
+    }
+  }
+},
+"eventDistribution" : {
+	"description" : "distribution of events for all pedestrians",
+	"distribution": {
+		"normal" : {
+			"description" : "normal distribution",
+			"samples" : 43,
+			"numberOfValues" : 200,
+			"minValue" : -1,
+			"maxValue" : 1,
+			"numberOfFields" : 6
+    }
+  }
+},
+"imeBetweenEventsDistribution" : {
+	"description" : "distribution of time between happended events for a pedestrian",
+	"distribution": {
+		"normal" : {
+			"description" : "normal distribution",
+			"samples" : 20,
+			"numberOfValues" : 200,
+			"minValue" : 100,
+			"maxValue" : 3600
+    }
+  }
+}
+}
+
+
