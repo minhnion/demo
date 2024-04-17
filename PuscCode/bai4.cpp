@@ -5,15 +5,8 @@
 #include <vector>
 #include <utility>
 #include <random>
+#include "newImplement/object/Ward"
 
-class Ward {
-public:
-    string name;
-private:
-    Point3f entrance;
-    Point3f exit;
-    vector<Point3f> walls;
-};
 
 // Hàm trả về một vector các pair <Ward, int>
 vector<pair<Ward, int>> generatePairs(vector<Ward>& wards, int triple, int single) {
