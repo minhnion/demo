@@ -52,12 +52,13 @@ void bai5(vector<Pedestrian*>& pedestrians, vector<Ward>& wards){
                 vector<Ward> hisJourney;
                 vector<int> a = chon_3_ward(mp);
                 for (int i=0;i<3;++i){
-                    isJourney.push_back(WardCounter[a[i]].first);
+                    hisJourney.push_back(WardCounter[a[i]].first);
                 }
+                it->setJourney(hisJourney);
             }   
         }
     }
-    while(!mp.empy());
+    while(!mp.empty());
 
     
 }
