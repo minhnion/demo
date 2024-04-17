@@ -10,6 +10,7 @@ int chon_1_ward(unordered_map<int,int>& mp){
         if (it.second > mp[wardMax]) wardMax = it.first;
     }
     mp[wardMax]--;
+    if (mp[wardMax] == 0) mp.erase[wardMax];
     return wardMax;
 }
 
@@ -26,6 +27,7 @@ vector<int> chon_3_ward(unordered_map<int,int>& mp){
     for (int i = 0; i < min(3, (int)pairs.size()); ++i) {
         top3Keys.push_back(pairs[i].first);
         mp[pairs[i].first]--;
+        if (mp[pairs[i].first] == 0) mp.erase[pairs[i].first];
     }
     return top3Keys;
 }
